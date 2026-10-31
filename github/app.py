@@ -24,6 +24,8 @@ import urllib.parse
 PORT = int(os.environ.get("PORT", 8000))
 LOG_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "instagram_dispatches.json")
 OWNER_INSTAGRAM = "@hydrodetailing.brisbane"
+SENDER_INSTAGRAM = "@hydroservice4300"
+SENDER_GMAIL = "hydroservice4300@gmail.com"
 
 def log_dispatch(record):
     dispatches = []
@@ -42,9 +44,9 @@ def log_dispatch(record):
         sys.stderr.write(f"Warning: Could not save log: {e}\n")
 
 def process_receipt(booking_data):
-    customer_ig = booking_data.get("instagramUsername", "").strip()
-    if customer_ig and not customer_ig.startswith("@"):
-        customer_ig = "@" + customer_ig
+    raw_customer_ig = booking_data.get("instagramUsername", "").strip()
+    clean_customer_ig = raw_customer_ig.replace("@", "").strip()
+    customer_ig = f"@{clean_customer_ig}" if clean_customer_ig else ""
 
     booking_id = booking_data.get("id", f"hydro_{int(time.time())}")
     ref_code = booking_id.upper().replace("HYDRO_", "HDB-")
@@ -68,40 +70,60 @@ def process_receipt(booking_data):
     # Preformatted message for Instagram direct chat
     formatted_msg = (
         f"🚗 HYDRO DETAILING BRISBANE RECEIPT PROOF\n"
-        f"-----------------------------------------\n"
+        f"=========================================\n"
         f"• Booking Ref: {ref_code}\n"
-        f"• Customer: {name} ({customer_ig or 'No handle'})\n"
+        f"• Customer: {name} ({customer_ig or 'Online Booking'})\n"
+        f"• Phone: {phone}\n"
         f"• Service: {service}\n"
         f"• Scheduled: {date} at {time_slot}\n"
         f"• Vehicle: {vehicle_str}\n"
         f"• Location: {address}\n"
         f"• Add-ons: {addons_str}\n"
-        f"• Total Amount: ${total}.00 AUD (GST Included)\n\n"
-        f"Owner: {OWNER_INSTAGRAM}\n"
-        f"Customer: {customer_ig or 'Registered Online'}\n"
-        f"Status: VERIFIED & CONFIRMED"
+        f"• Total: ${total}.00 AUD (Pay on completion)\n"
+        f"=========================================\n"
+        f"Sender Bot: {SENDER_INSTAGRAM} ({SENDER_GMAIL})\n"
+        f"Owner: {OWNER_INSTAGRAM} (Cody)\n"
+        f"Customer: {customer_ig or 'Registered'}\n"
+        f"Verification: VERIFIED & CONFIRMED"
+    )
+
+    # Short "Hi" ping message as requested
+    hi_msg = (
+        f"Hi {name}! 👋 This is Cody from Hydro Detailing Brisbane (@hydrodetailing.brisbane). "
+        f"Your mobile detail appointment ({ref_code}) is confirmed for {date} at {time_slot}! "
+        f"Total: ${total}.00 AUD. See you then!"
     )
 
     dispatch_record = {
         "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
         "booking_ref": ref_code,
+        "sender_instagram": SENDER_INSTAGRAM,
+        "sender_email": SENDER_GMAIL,
         "customer": name,
         "customer_instagram": customer_ig,
         "owner_instagram": OWNER_INSTAGRAM,
         "total": total,
-        "status": "dispatched"
+        "status": "ready_to_send",
+        "delivery_method": "direct_two_way_ig"
     }
     
     log_dispatch(dispatch_record)
 
     result = {
         "success": True,
-        "status": "dispatched",
+        "status": "ready_to_send",
         "booking_ref": ref_code,
+        "sender_instagram": SENDER_INSTAGRAM,
+        "sender_email": SENDER_GMAIL,
         "customer_instagram": customer_ig,
+        "clean_customer_ig": clean_customer_ig,
         "owner_instagram": OWNER_INSTAGRAM,
         "message": formatted_msg,
+        "hi_message": hi_msg,
         "direct_url": "https://ig.me/m/hydrodetailing.brisbane",
+        "owner_chat_url": "https://ig.me/m/hydrodetailing.brisbane",
+        "customer_chat_url": f"https://ig.me/m/{clean_customer_ig}" if clean_customer_ig else None,
+        "meta_security_notice": "Meta blocks headless bot password logins to prevent security checkpoints/bans. 1-click direct link enables instant sending with receipt pre-copied.",
         "timestamp": dispatch_record["timestamp"]
     }
     return result

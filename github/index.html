@@ -717,23 +717,33 @@
         </div>
 
         <!-- Instagram Status Box -->
-        <div id="ig-status-box" class="hidden glass-card p-4 rounded-xl border border-pink-500/30 space-y-2">
+        <div id="ig-status-box" class="hidden glass-card p-4 rounded-xl border border-pink-500/30 space-y-3">
           <div class="flex items-center justify-between text-xs">
             <span class="font-bold text-pink-400 flex items-center gap-1.5">
-              <span class="w-2 h-2 rounded-full bg-pink-500 animate-ping"></span>
-              Instagram Receipt Dispatch Ready
+              <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+              Dispatcher: @hydroservice4300
             </span>
             <span id="ig-ref-badge" class="text-slate-400 font-mono">HDB-XXXXXX</span>
           </div>
           <p class="text-xs text-slate-300">
-            Receipt dispatched to <strong>@hydrodetailing.brisbane</strong>. Click below to open direct chat or copy the proof payload.
+            Receipt processed! Meta/Instagram requires 1-tap direct chat to prevent bot security checkpoints on @hydroservice4300. Use the buttons below to dispatch:
           </p>
-          <div class="flex items-center gap-2 pt-2">
-            <a href="https://ig.me/m/hydrodetailing.brisbane" target="_blank" class="flex-1 text-center bg-pink-600 hover:bg-pink-500 text-white font-bold py-2 rounded-lg text-xs transition">
-              Open Direct Chat (@hydrodetailing.brisbane)
+
+          <div class="space-y-2 pt-1">
+            <a href="https://ig.me/m/hydrodetailing.brisbane" target="_blank" onclick="copyReceiptText()" class="w-full block text-center bg-gradient-to-r from-pink-600 to-purple-600 hover:opacity-95 text-white font-bold py-2.5 rounded-lg text-xs transition shadow">
+              1. Send to Cody (@hydrodetailing.brisbane) &rarr;
             </a>
-            <button onclick="copyReceiptText()" id="copy-btn" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-4 py-2 rounded-lg text-xs font-semibold border border-slate-700 transition">
-              Copy Proof
+            <a id="ig-customer-link" href="https://ig.me/m/" target="_blank" onclick="copyReceiptText()" class="w-full block text-center bg-slate-800 hover:bg-slate-700 border border-slate-700 text-cyan-300 font-bold py-2.5 rounded-lg text-xs transition">
+              2. Send to Customer DM &rarr;
+            </a>
+          </div>
+
+          <div class="flex items-center gap-2 pt-1">
+            <button onclick="copyHiText()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-200 py-2 rounded-lg text-xs font-semibold border border-slate-700 transition">
+              👋 Copy Quick &ldquo;Hi&rdquo; Ping
+            </button>
+            <button onclick="copyReceiptText()" id="copy-btn" class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-200 py-2 rounded-lg text-xs font-semibold border border-slate-700 transition">
+              📄 Copy Full Proof
             </button>
           </div>
         </div>
@@ -1275,9 +1285,21 @@
       const box = document.getElementById('ig-status-box');
       if (box) box.classList.remove('hidden');
 
+      const cleanCust = (currentBooking.instagramUsername || '').replace('@', '').trim();
+      const custLink = document.getElementById('ig-customer-link');
+      if (custLink) {
+        if (cleanCust) {
+          custLink.href = `https://ig.me/m/${cleanCust}`;
+          custLink.textContent = `2. Send to Customer (@${cleanCust}) →`;
+          custLink.classList.remove('hidden');
+        } else {
+          custLink.classList.add('hidden');
+        }
+      }
+
       const message = generateInstagramText(currentBooking);
       navigator.clipboard.writeText(message).then(() => {
-        showToast('📋 Receipt text copied! Opening Instagram...');
+        showToast('📋 Receipt text copied! Opening Instagram for Cody...');
       }).catch(() => {
         showToast('Opening Instagram...');
       });
@@ -1289,15 +1311,18 @@
 
     function generateInstagramText(b) {
       return `🚗 HYDRO DETAILING BRISBANE RECEIPT PROOF\n` +
-             `-----------------------------------------\n` +
+             `=========================================\n` +
              `• Booking Ref: ${b.id}\n` +
              `• Customer: ${b.name} (${b.instagramUsername})\n` +
+             `• Phone: ${b.phone}\n` +
              `• Service: ${b.serviceName}\n` +
              `• Scheduled: ${b.date} at ${b.time}\n` +
              `• Vehicle: ${b.vehicleModel} (${b.vehicleSize.toUpperCase()})\n` +
              `• Location: ${b.address}\n` +
-             `• Total: $${b.totalPrice}.00 AUD (GST Included)\n\n` +
-             `Owner: @hydrodetailing.brisbane\n` +
+             `• Total: $${b.totalPrice}.00 AUD (Pay on completion)\n` +
+             `=========================================\n` +
+             `Dispatcher: @hydroservice4300 (hydroservice4300@gmail.com)\n` +
+             `Owner: @hydrodetailing.brisbane (Cody)\n` +
              `Status: VERIFIED & CONFIRMED`;
     }
 
@@ -1306,6 +1331,14 @@
       const msg = generateInstagramText(currentBooking);
       navigator.clipboard.writeText(msg).then(() => {
         showToast('✅ Instagram receipt message copied to clipboard!');
+      });
+    }
+
+    function copyHiText() {
+      if (!currentBooking) return;
+      const hi = `Hi ${currentBooking.name}! 👋 This is Cody from Hydro Detailing Brisbane (@hydrodetailing.brisbane). Your mobile detail appointment (${currentBooking.id}) is confirmed for ${currentBooking.date} at ${currentBooking.time}! Total: $${currentBooking.totalPrice}.00 AUD. See you then!`;
+      navigator.clipboard.writeText(hi).then(() => {
+        showToast('👋 "Hi" appointment message copied to clipboard!');
       });
     }
 

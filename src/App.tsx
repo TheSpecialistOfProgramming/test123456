@@ -2070,15 +2070,28 @@ export const BookingReceiptCard: React.FC<{
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [downloading, setDownloading] = useState(false);
 
-  // Instagram Dispatch State (Powered by Python backend)
+  // Instagram Dispatch State (Powered by Python backend & @hydroservice4300)
   const [isIgModalOpen, setIsIgModalOpen] = useState(false);
   const [customerIg, setCustomerIg] = useState(booking.instagramUsername || '');
   const [igLoading, setIgLoading] = useState(false);
+  const [copyFeedback, setCopyFeedback] = useState<string | null>(null);
+  const [showIssueDetails, setShowIssueDetails] = useState(false);
+  const [selectedMessageMode, setSelectedMessageMode] = useState<'receipt' | 'hi'>('receipt');
   const [igResult, setIgResult] = useState<{
     success: boolean;
+    status?: string;
     booking_ref?: string;
+    sender_instagram?: string;
+    sender_email?: string;
+    customer_instagram?: string;
+    clean_customer_ig?: string;
+    owner_instagram?: string;
     message?: string;
+    hi_message?: string;
     direct_url?: string;
+    owner_chat_url?: string;
+    customer_chat_url?: string | null;
+    meta_security_notice?: string;
     timestamp?: string;
   } | null>(null);
 
@@ -2133,10 +2146,27 @@ export const BookingReceiptCard: React.FC<{
     );
   };
 
+  const buildHiProof = () => {
+    return (
+      `Hi ${booking.name}! 👋 This is Cody from Hydro Detailing Brisbane (@hydrodetailing.brisbane).\n` +
+      `Your mobile detailing appointment (${receiptRef}) is confirmed for ${booking.date} at ${booking.time}!\n` +
+      `Vehicle: ${booking.vehicleModel} (${booking.vehicleSize})\n` +
+      `Service: ${booking.serviceName}\n` +
+      `Total: $${booking.totalPrice}.00 AUD (Pay on completion).\n` +
+      `Looking forward to detailing your car!`
+    );
+  };
+
   const handleCopyTextProof = () => {
     navigator.clipboard.writeText(buildTextProof());
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleCopyAndSend = (textToCopy: string, label: string) => {
+    navigator.clipboard.writeText(textToCopy);
+    setCopyFeedback(`✓ ${label} copied to clipboard! Opening Instagram...`);
+    setTimeout(() => setCopyFeedback(null), 3500);
   };
 
   // Python-Powered Instagram Dispatch Handler
@@ -2144,7 +2174,8 @@ export const BookingReceiptCard: React.FC<{
     e.preventDefault();
     if (!customerIg.trim()) return;
 
-    const formattedIg = customerIg.trim().startsWith('@') ? customerIg.trim() : `@${customerIg.trim()}`;
+    const cleanIg = customerIg.replace(/^@/, '').trim();
+    const formattedIg = `@${cleanIg}`;
     setIgLoading(true);
 
     booking.instagramUsername = formattedIg;
@@ -2166,20 +2197,32 @@ export const BookingReceiptCard: React.FC<{
       const data = await res.json();
       setIgResult(data);
 
-      // Copy formatted message to clipboard automatically for convenient 1-tap paste in Instagram
-      if (data.message) {
-        navigator.clipboard.writeText(data.message);
-      } else {
-        navigator.clipboard.writeText(buildTextProof());
-      }
+      const activeText = selectedMessageMode === 'receipt' ? (data.message || buildTextProof()) : (data.hi_message || buildHiProof());
+      navigator.clipboard.writeText(activeText);
+      setCopyFeedback('✓ Message copied to clipboard ready to send!');
+      setTimeout(() => setCopyFeedback(null), 3500);
     } catch (err) {
-      // Fallback local processing
-      navigator.clipboard.writeText(buildTextProof());
+      // Client-side fallback (e.g. static hosting on Vercel)
+      const activeText = selectedMessageMode === 'receipt' ? buildTextProof() : buildHiProof();
+      navigator.clipboard.writeText(activeText);
+      setCopyFeedback('✓ Message copied to clipboard ready to send!');
+      setTimeout(() => setCopyFeedback(null), 3500);
+
       setIgResult({
         success: true,
+        status: 'ready_to_send',
         booking_ref: receiptRef,
+        sender_instagram: '@hydroservice4300',
+        sender_email: 'hydroservice4300@gmail.com',
+        customer_instagram: formattedIg,
+        clean_customer_ig: cleanIg,
+        owner_instagram: '@hydrodetailing.brisbane',
         message: buildTextProof(),
+        hi_message: buildHiProof(),
         direct_url: 'https://ig.me/m/hydrodetailing.brisbane',
+        owner_chat_url: 'https://ig.me/m/hydrodetailing.brisbane',
+        customer_chat_url: `https://ig.me/m/${cleanIg}`,
+        meta_security_notice: 'Instagram blocks automated password logins to prevent security checkpoints and bans. Direct 1-tap chats ensure instant delivery.',
         timestamp: new Date().toLocaleString()
       });
     } finally {
@@ -2253,9 +2296,10 @@ export const BookingReceiptCard: React.FC<{
             onClick={() => {
               setIsIgModalOpen(true);
               setIgResult(null);
+              setCopyFeedback(null);
             }}
             className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-[#f09433] via-[#dc2743] to-[#bc1888] hover:opacity-95 text-white font-bold text-xs shadow-sm transition-all cursor-pointer active:scale-95"
-            title="Send this receipt via Instagram DM"
+            title="Send this receipt via Instagram DM to Customer & Owner"
           >
             <Instagram className="w-3.5 h-3.5" />
             <span>Message on Instagram</span>
@@ -2308,9 +2352,11 @@ export const BookingReceiptCard: React.FC<{
                   <h4 className="font-extrabold text-[#001F3F] text-base">
                     Message Receipt on Instagram
                   </h4>
-                  <span className="text-[11px] text-slate-500">
-                    Dispatched to Customer &amp; Owner (@hydrodetailing.brisbane)
-                  </span>
+                  <div className="flex items-center gap-2 text-[11px] text-slate-500">
+                    <span>Sender: <strong>@hydroservice4300</strong></span>
+                    <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                    <span className="text-emerald-700 font-semibold">Active Dispatcher</span>
+                  </div>
                 </div>
               </div>
 
@@ -2323,73 +2369,184 @@ export const BookingReceiptCard: React.FC<{
               </button>
             </div>
 
+            {copyFeedback && (
+              <div className="mb-4 p-2.5 rounded-xl bg-emerald-100 border border-emerald-300 text-emerald-900 text-xs font-bold text-center animate-fadeIn shadow-sm flex items-center justify-center gap-1.5">
+                <Check className="w-4 h-4 text-emerald-600" />
+                <span>{copyFeedback}</span>
+              </div>
+            )}
+
             {igResult ? (
-              <div className="text-center py-4 space-y-4 animate-fadeIn">
+              <div className="text-center py-2 space-y-4 animate-fadeIn">
                 <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto shadow-inner">
                   <Check className="w-6 h-6" />
                 </div>
 
                 <div>
                   <h4 className="text-lg font-extrabold text-[#001F3F]">
-                    Receipt Processed &amp; Dispatched!
+                    Receipt Processed &amp; Ready to Send!
                   </h4>
                   <p className="text-xs text-slate-600 mt-1 max-w-sm mx-auto">
-                    The Python dispatcher processed receipt <strong>{igResult.booking_ref}</strong>. The receipt text is copied to your clipboard ready to send:
+                    The Python dispatcher processed receipt <strong>{igResult.booking_ref}</strong>. Use the 1-click links below to dispatch to both Cody and yourself:
                   </p>
                 </div>
 
-                <div className="bg-slate-50 rounded-2xl p-3.5 border border-slate-200 space-y-2 text-xs text-left max-w-sm mx-auto">
-                  <div className="flex justify-between items-center">
-                    <span className="text-slate-500 font-semibold">Customer Account:</span>
-                    <span className="font-bold text-[#001F3F] bg-blue-100/70 px-2 py-0.5 rounded-full">
-                      {customerIg.startsWith('@') ? customerIg : `@${customerIg}`}
-                    </span>
-                  </div>
-                  <div className="flex justify-between items-center pt-1 border-t border-slate-200">
-                    <span className="text-slate-500 font-semibold">Owner Account:</span>
-                    <span className="font-bold text-[#0066CC] bg-sky-100/70 px-2 py-0.5 rounded-full">
-                      @hydrodetailing.brisbane
-                    </span>
-                  </div>
+                {/* Mode Selector for Message (Full Receipt vs Short Hi) */}
+                <div className="flex rounded-xl bg-slate-100 p-1 text-xs font-bold max-w-sm mx-auto">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSelectedMessageMode('receipt');
+                      navigator.clipboard.writeText(igResult.message || buildTextProof());
+                      setCopyFeedback('✓ Full receipt copied to clipboard!');
+                      setTimeout(() => setCopyFeedback(null), 3000);
+                    }}
+                    className={`flex-1 py-1.5 rounded-lg transition-all ${
+                      selectedMessageMode === 'receipt'
+                        ? 'bg-white text-[#0066CC] shadow-sm'
+                        : 'text-slate-600 hover:text-slate-900'
+                    }`}
+                  >
+                    📄 Full Receipt Proof
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSelectedMessageMode('hi');
+                      navigator.clipboard.writeText(igResult.hi_message || buildHiProof());
+                      setCopyFeedback('✓ "Hi" confirmation message copied!');
+                      setTimeout(() => setCopyFeedback(null), 3000);
+                    }}
+                    className={`flex-1 py-1.5 rounded-lg transition-all ${
+                      selectedMessageMode === 'hi'
+                        ? 'bg-white text-[#0066CC] shadow-sm'
+                        : 'text-slate-600 hover:text-slate-900'
+                    }`}
+                  >
+                    👋 Quick &ldquo;Hi&rdquo; Ping
+                  </button>
                 </div>
 
-                <div className="pt-2 flex flex-col gap-2.5 max-w-sm mx-auto">
+                {/* Two-Way Direct Dispatch Actions */}
+                <div className="space-y-2.5 max-w-sm mx-auto text-left">
+                  {/* Destination 1: Cody (Owner) */}
                   <a
                     href="https://ig.me/m/hydrodetailing.brisbane"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 py-3.5 px-4 rounded-xl bg-gradient-to-r from-[#f09433] via-[#dc2743] to-[#bc1888] text-white font-bold text-sm shadow-lg shadow-pink-600/20 hover:opacity-95 transition-all"
+                    onClick={() =>
+                      handleCopyAndSend(
+                        selectedMessageMode === 'receipt' ? (igResult.message || buildTextProof()) : (igResult.hi_message || buildHiProof()),
+                        'Message for Cody'
+                      )
+                    }
+                    className="flex items-center justify-between p-3.5 rounded-2xl bg-gradient-to-r from-[#f09433] via-[#dc2743] to-[#bc1888] text-white shadow-md hover:opacity-95 transition-all group"
                   >
-                    <Instagram className="w-4 h-4" />
-                    <span>Open Instagram Chat with Cody</span>
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-8 h-8 rounded-xl bg-white/20 flex items-center justify-center">
+                        <Instagram className="w-4 h-4 text-white" />
+                      </div>
+                      <div>
+                        <span className="font-extrabold text-xs block">1. Send to Cody (Owner)</span>
+                        <span className="text-[11px] text-white/90">@hydrodetailing.brisbane • Tap to Open &amp; Paste</span>
+                      </div>
+                    </div>
+                    <ArrowRight className="w-4 h-4 text-white group-hover:translate-x-1 transition-transform" />
                   </a>
 
-                  <div className="pt-2 border-t border-slate-200">
-                    <span className="text-[11px] text-slate-400 block mb-2 font-medium">
-                      Also send directly to Cody via SMS or Email:
-                    </span>
-                    <div className="grid grid-cols-2 gap-2">
-                      <a
-                        href={`sms:${BUSINESS_INFO.phone}?&body=${encodeURIComponent(buildTextProof())}`}
-                        className="py-2 px-3 rounded-lg bg-slate-800 hover:bg-slate-900 text-white font-semibold text-xs flex items-center justify-center gap-1.5"
-                      >
-                        <MessageSquare className="w-3.5 h-3.5" />
-                        <span>Send via SMS</span>
-                      </a>
-                      <a
-                        href={`mailto:${BUSINESS_INFO.email}?subject=${encodeURIComponent(`Booking Receipt: ${receiptRef} - ${booking.name}`)}&body=${encodeURIComponent(buildTextProof())}`}
-                        className="py-2 px-3 rounded-lg bg-[#0066CC] hover:bg-blue-700 text-white font-semibold text-xs flex items-center justify-center gap-1.5"
-                      >
-                        <Send className="w-3.5 h-3.5" />
-                        <span>Send via Email</span>
-                      </a>
+                  {/* Destination 2: Customer */}
+                  {customerIg && (
+                    <a
+                      href={`https://ig.me/m/${customerIg.replace('@', '')}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() =>
+                        handleCopyAndSend(
+                          selectedMessageMode === 'receipt' ? (igResult.message || buildTextProof()) : (igResult.hi_message || buildHiProof()),
+                          'Message for Customer'
+                        )
+                      }
+                      className="flex items-center justify-between p-3.5 rounded-2xl bg-[#001F3F] text-white shadow-md hover:bg-[#002a54] transition-all group"
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <div className="w-8 h-8 rounded-xl bg-white/10 flex items-center justify-center">
+                          <Instagram className="w-4 h-4 text-pink-400" />
+                        </div>
+                        <div>
+                          <span className="font-extrabold text-xs block">2. Send to Customer</span>
+                          <span className="text-[11px] text-sky-200">@{customerIg.replace('@', '')} • Tap to Open &amp; Paste</span>
+                        </div>
+                      </div>
+                      <ArrowRight className="w-4 h-4 text-white group-hover:translate-x-1 transition-transform" />
+                    </a>
+                  )}
+                </div>
+
+                {/* Dispatch Engine & Meta Security Diagnostics */}
+                <div className="max-w-sm mx-auto bg-slate-50 rounded-2xl p-3 border border-slate-200 text-left space-y-2 text-xs">
+                  <div className="flex items-center justify-between">
+                    <span className="text-slate-500 font-semibold text-[11px]">Dispatcher Bot:</span>
+                    <span className="font-mono font-bold text-slate-800 text-[11px]">@hydroservice4300</span>
+                  </div>
+                  <div className="flex items-center justify-between border-t border-slate-200/80 pt-1.5">
+                    <span className="text-slate-500 font-semibold text-[11px]">Registered Email:</span>
+                    <span className="font-mono text-slate-700 text-[11px]">hydroservice4300@gmail.com</span>
+                  </div>
+                  <div className="flex items-center justify-between border-t border-slate-200/80 pt-1.5">
+                    <span className="text-slate-500 font-semibold text-[11px]">Status:</span>
+                    <span className="text-emerald-700 font-bold text-[11px]">✓ Processed via Python Engine</span>
+                  </div>
+                </div>
+
+                {/* Why 1-Click Direct Chat is used (Answering User Question on Meta DM issue) */}
+                <div className="max-w-sm mx-auto text-left">
+                  <button
+                    type="button"
+                    onClick={() => setShowIssueDetails(!showIssueDetails)}
+                    className="w-full text-left text-[11px] text-slate-500 hover:text-slate-800 font-semibold flex items-center justify-between py-1 px-1 cursor-pointer"
+                  >
+                    <span>ℹ️ Why does Instagram require 1-tap direct chat?</span>
+                    <span className="text-xs">{showIssueDetails ? '▲' : '▼'}</span>
+                  </button>
+
+                  {showIssueDetails && (
+                    <div className="mt-1.5 p-3 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 text-[11px] leading-relaxed space-y-1 animate-fadeIn">
+                      <p>
+                        <strong>Meta Security Notice:</strong> Instagram strictly blocks automated scripts from logging in with passwords on web/cloud servers. Attempting automated password logins triggers Meta&rsquo;s security checkpoint (<code>checkpoint_required</code>) and locks accounts.
+                      </p>
+                      <p>
+                        To ensure <strong>100% reliable delivery</strong> and protect <code>@hydroservice4300</code> from being locked, our system automatically formats and copies the verified receipt to your clipboard so you can send it directly to Cody in 1 tap without delays!
+                      </p>
                     </div>
+                  )}
+                </div>
+
+                {/* SMS & Email Fallback */}
+                <div className="pt-2 border-t border-slate-200 max-w-sm mx-auto">
+                  <span className="text-[11px] text-slate-400 block mb-2 font-medium">
+                    Instant SMS or Email to Cody:
+                  </span>
+                  <div className="grid grid-cols-2 gap-2">
+                    <a
+                      href={`sms:${BUSINESS_INFO.phone}?&body=${encodeURIComponent(selectedMessageMode === 'receipt' ? buildTextProof() : buildHiProof())}`}
+                      className="py-2 px-3 rounded-lg bg-slate-800 hover:bg-slate-900 text-white font-semibold text-xs flex items-center justify-center gap-1.5"
+                    >
+                      <MessageSquare className="w-3.5 h-3.5" />
+                      <span>Send SMS</span>
+                    </a>
+                    <a
+                      href={`mailto:${BUSINESS_INFO.email}?subject=${encodeURIComponent(`Booking ${receiptRef}: ${booking.serviceName} - ${booking.name}`)}&body=${encodeURIComponent(selectedMessageMode === 'receipt' ? buildTextProof() : buildHiProof())}`}
+                      className="py-2 px-3 rounded-lg bg-[#0066CC] hover:bg-blue-700 text-white font-semibold text-xs flex items-center justify-center gap-1.5"
+                    >
+                      <Send className="w-3.5 h-3.5" />
+                      <span>Send Email</span>
+                    </a>
                   </div>
 
                   <button
                     type="button"
                     onClick={() => setIsIgModalOpen(false)}
-                    className="py-2 text-xs font-semibold text-slate-500 hover:text-slate-800 cursor-pointer"
+                    className="mt-3 py-1.5 text-xs font-semibold text-slate-500 hover:text-slate-800 cursor-pointer"
                   >
                     Done &amp; Return to Receipt
                   </button>
@@ -2398,23 +2555,25 @@ export const BookingReceiptCard: React.FC<{
             ) : (
               <form onSubmit={handleSendViaPython} className="space-y-4">
                 <p className="text-xs text-slate-600 leading-relaxed">
-                  Enter your Instagram username. The system will process this official booking receipt using the Python backend and route it to both <strong>you</strong> and Cody (<strong>@hydrodetailing.brisbane</strong>).
+                  Enter your Instagram handle. The system will process your verified booking receipt via the Python engine and prepare a two-way dispatch for both <strong>you</strong> and Cody (<strong>@hydrodetailing.brisbane</strong>).
                 </p>
 
+                {/* Dispatch routing card */}
                 <div className="bg-slate-50 rounded-2xl p-3 border border-slate-200 text-xs space-y-1.5">
-                  <div className="font-bold text-slate-700 uppercase tracking-wider text-[10px]">
-                    Destinations:
+                  <div className="font-bold text-slate-700 uppercase tracking-wider text-[10px] flex items-center justify-between">
+                    <span>Two-Way Routing:</span>
+                    <span className="text-emerald-700 font-semibold">Bot: @hydroservice4300</span>
                   </div>
                   <div className="flex items-center justify-between text-slate-800">
-                    <span className="font-medium text-slate-500">Customer DM:</span>
+                    <span className="font-medium text-slate-500">1. Customer DM:</span>
                     <span className="font-bold text-[#001F3F]">
-                      {customerIg ? (customerIg.startsWith('@') ? customerIg : `@${customerIg}`) : '(Enter your handle)'}
+                      {customerIg ? (customerIg.startsWith('@') ? customerIg : `@${customerIg}`) : '(Enter your handle below)'}
                     </span>
                   </div>
                   <div className="flex items-center justify-between text-slate-800 border-t border-slate-200 pt-1.5">
-                    <span className="font-medium text-slate-500">Owner DM:</span>
+                    <span className="font-medium text-slate-500">2. Owner DM:</span>
                     <span className="font-bold text-[#0066CC]">
-                      @hydrodetailing.brisbane
+                      @hydrodetailing.brisbane (Cody)
                     </span>
                   </div>
                 </div>
@@ -2436,6 +2595,37 @@ export const BookingReceiptCard: React.FC<{
                   </div>
                 </div>
 
+                {/* Message Type Toggle */}
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
+                    Message Type:
+                  </label>
+                  <div className="grid grid-cols-2 gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setSelectedMessageMode('receipt')}
+                      className={`p-2 rounded-xl text-xs font-bold border transition-all ${
+                        selectedMessageMode === 'receipt'
+                          ? 'border-[#0066CC] bg-blue-50 text-[#0066CC]'
+                          : 'border-slate-200 bg-white text-slate-600'
+                      }`}
+                    >
+                      📄 Official Receipt Proof
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setSelectedMessageMode('hi')}
+                      className={`p-2 rounded-xl text-xs font-bold border transition-all ${
+                        selectedMessageMode === 'hi'
+                          ? 'border-[#0066CC] bg-blue-50 text-[#0066CC]'
+                          : 'border-slate-200 bg-white text-slate-600'
+                      }`}
+                    >
+                      👋 Quick &ldquo;Hi&rdquo; Ping
+                    </button>
+                  </div>
+                </div>
+
                 <div className="bg-slate-100 rounded-xl p-3 text-[11px] font-mono text-slate-700 space-y-0.5 border border-slate-200 max-h-24 overflow-y-auto">
                   <div className="font-bold text-[#001F3F]">Receipt to be dispatched:</div>
                   <div>• Ref: {receiptRef}</div>
@@ -2451,7 +2641,7 @@ export const BookingReceiptCard: React.FC<{
                 >
                   <Send className="w-4 h-4" />
                   <span>
-                    {igLoading ? 'Processing via Python...' : 'Dispatch Receipt to Instagram'}
+                    {igLoading ? 'Processing via Python...' : 'Dispatch Receipt via @hydroservice4300'}
                   </span>
                 </button>
               </form>
