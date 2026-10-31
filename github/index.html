@@ -59,6 +59,87 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
+
+    /* Shimmer Effect */
+    @keyframes hydroShimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+    .btn-shimmer {
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-shimmer::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(60deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+      transform: rotate(25deg) translateY(-100%);
+      transition: transform 0.75s ease;
+    }
+    .btn-shimmer:hover::after {
+      transform: rotate(25deg) translateY(100%);
+    }
+
+    /* Floating Ambient Droplets */
+    @keyframes floatSlow {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-10px) rotate(2deg); }
+    }
+    .animate-float-slow {
+      animation: floatSlow 4s ease-in-out infinite;
+    }
+
+    /* Radar Ping */
+    @keyframes radarPing {
+      0% { transform: scale(0.9); opacity: 0.9; }
+      70% { transform: scale(2.2); opacity: 0; }
+      100% { transform: scale(2.4); opacity: 0; }
+    }
+    .animate-radar-ping {
+      animation: radarPing 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+    }
+
+    /* Water Ripple */
+    @keyframes waterRipple {
+      0% { box-shadow: 0 0 0 0 rgba(6, 182, 212, 0.7); }
+      70% { box-shadow: 0 0 0 16px rgba(6, 182, 212, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(6, 182, 212, 0); }
+    }
+    .animate-water-ripple {
+      animation: waterRipple 2.2s infinite;
+    }
+
+    /* Receipt Ticket Slide-Down */
+    @keyframes receiptSlideDown {
+      0% { opacity: 0; transform: translateY(-30px) scale(0.96); filter: blur(4px); }
+      60% { opacity: 1; transform: translateY(4px) scale(1.01); filter: blur(0px); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .animate-receipt-print {
+      animation: receiptSlideDown 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* Modal Animation */
+    @keyframes modalFadeIn {
+      0% { opacity: 0; transform: scale(0.95) translateY(10px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .animate-modal-in {
+      animation: modalFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, ::before, ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
     /* Custom Scrollbar */
     ::-webkit-scrollbar {
       width: 8px;
@@ -148,11 +229,21 @@
        ========================================== -->
   <section class="relative overflow-hidden py-16 lg:py-24 border-b border-slate-800/60">
     <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(6,182,212,0.15),transparent_50%)] pointer-events-none"></div>
+    <!-- Ambient Animated Floating Water Orbs -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <div class="absolute top-1/4 left-10 w-64 h-64 rounded-full bg-cyan-500/10 blur-3xl animate-float-slow"></div>
+      <div class="absolute bottom-1/4 right-10 w-80 h-80 rounded-full bg-blue-600/15 blur-3xl animate-float-slow" style="animation-delay: 2s;"></div>
+    </div>
+
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
       <div class="grid lg:grid-cols-12 gap-12 items-center">
         <div class="lg:col-span-7 space-y-6">
           <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-cyan-950/80 border border-cyan-500/40 text-cyan-300">
-            📍 Mobile Service Across Greater Brisbane, Ipswich &amp; Springfield
+            <span class="relative flex h-2 w-2">
+              <span class="animate-radar-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-cyan-400"></span>
+            </span>
+            <span>Mobile Units Active Across Greater Brisbane, Ipswich &amp; Springfield</span>
           </div>
           <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight">
             Brisbane’s Premier <br>
@@ -163,7 +254,7 @@
           </p>
 
           <div class="flex flex-wrap items-center gap-4 pt-2">
-            <button onclick="openBookingModal()" class="bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-300 hover:to-blue-400 text-slate-950 font-bold px-7 py-3.5 rounded-xl shadow-xl shadow-cyan-500/30 text-base transition transform hover:-translate-y-0.5">
+            <button onclick="openBookingModal()" class="btn-shimmer bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-300 hover:to-blue-400 text-slate-950 font-bold px-7 py-3.5 rounded-xl shadow-xl shadow-cyan-500/30 text-base transition transform hover:-translate-y-0.5">
               📅 Book Your Detail Online
             </button>
             <a href="#packages" class="glass-card hover:bg-slate-800/50 text-white font-semibold px-6 py-3.5 rounded-xl text-base transition">
@@ -475,10 +566,13 @@
        INTERACTIVE BOOKING MODAL & RECEIPT ENGINE
        ========================================== -->
   <div id="booking-modal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
-    <div class="glass-card bg-slate-900/95 border border-cyan-500/30 w-full max-w-2xl rounded-2xl shadow-2xl p-6 sm:p-8 my-auto relative">
+    <div class="animate-modal-in glass-card bg-slate-900/95 border border-cyan-500/30 w-full max-w-2xl rounded-2xl shadow-2xl p-6 sm:p-8 my-auto relative overflow-hidden">
       
+      <!-- Particle Celebration Overlay Canvas -->
+      <canvas id="celebration-canvas" class="absolute inset-0 pointer-events-none z-30 w-full h-full"></canvas>
+
       <!-- Close Button -->
-      <button onclick="closeBookingModal()" class="absolute top-5 right-5 text-slate-400 hover:text-white text-2xl font-bold">
+      <button onclick="closeBookingModal()" class="absolute top-5 right-5 text-slate-400 hover:text-white text-2xl font-bold z-40">
         &times;
       </button>
 
@@ -909,7 +1003,9 @@
 
       // Transition to Receipt Step
       document.getElementById('booking-form').classList.add('hidden');
-      document.getElementById('receipt-step').classList.remove('hidden');
+      const rStep = document.getElementById('receipt-step');
+      rStep.classList.remove('hidden');
+      rStep.classList.add('animate-receipt-print');
       document.getElementById('step-badge').textContent = 'Step 2 of 2';
       document.getElementById('step-title').textContent = 'Official Photo Receipt & Proof';
       document.getElementById('modal-heading').textContent = 'Booking Verified!';
@@ -917,8 +1013,58 @@
       // Render 2x Retina Canvas Receipt
       drawReceiptCanvas(currentBooking);
 
+      // Trigger celebratory water droplet spray
+      celebrateBooking();
+
       // Automatically dispatch to Python backend or prepare payload
       sendToBackend(currentBooking);
+    }
+
+    // --- Particle Celebration Animation ---
+    function celebrateBooking() {
+      const canvas = document.getElementById('celebration-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const width = (canvas.width = canvas.parentElement.clientWidth || 600);
+      const height = (canvas.height = canvas.parentElement.clientHeight || 500);
+
+      const colors = ['#06b6d4', '#38bdf8', '#0284c7', '#f59e0b', '#10b981', '#ffffff'];
+      const particles = [];
+      for (let i = 0; i < 70; i++) {
+        particles.push({
+          x: width / 2 + (Math.random() - 0.5) * 60,
+          y: height * 0.45,
+          vx: (Math.random() - 0.5) * 10,
+          vy: -Math.random() * 10 - 4,
+          radius: Math.random() * 4 + 2,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          alpha: 1,
+          decay: Math.random() * 0.015 + 0.008
+        });
+      }
+
+      function frame() {
+        ctx.clearRect(0, 0, width, height);
+        let alive = 0;
+        particles.forEach(p => {
+          if (p.alpha <= 0) return;
+          alive++;
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vy += 0.25;
+          p.alpha -= p.decay;
+
+          ctx.save();
+          ctx.globalAlpha = Math.max(0, p.alpha);
+          ctx.fillStyle = p.color;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.restore();
+        });
+        if (alive > 0) requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
     }
 
     // --- High-Resolution 2x Canvas Drawing Engine ---

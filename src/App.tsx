@@ -426,6 +426,110 @@ export const SOCIAL_POSTS = [
 ];
 
 /* =========================================================================
+   2.5 CELEBRATION SPRAY EFFECT (HYDRO DROPLETS & SPARKLES)
+   ========================================================================= */
+
+export const HydroCelebrationSpray: React.FC = () => {
+  const canvasRef = React.useRef<HTMLCanvasElement | null>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let width = (canvas.width = canvas.parentElement?.clientWidth || 600);
+    let height = (canvas.height = canvas.parentElement?.clientHeight || 450);
+
+    const colors = ['#0066CC', '#4DA6FF', '#38BDF8', '#0284C7', '#F59E0B', '#10B981', '#FFFFFF'];
+    const particles: Array<{
+      x: number;
+      y: number;
+      vx: number;
+      vy: number;
+      radius: number;
+      color: string;
+      alpha: number;
+      decay: number;
+      shape: 'drop' | 'sparkle';
+      angle: number;
+      vAngle: number;
+    }> = [];
+
+    for (let i = 0; i < 80; i++) {
+      particles.push({
+        x: width / 2 + (Math.random() - 0.5) * 80,
+        y: height * 0.4,
+        vx: (Math.random() - 0.5) * 11,
+        vy: -Math.random() * 11 - 4,
+        radius: Math.random() * 4 + 2,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        alpha: 1,
+        decay: Math.random() * 0.012 + 0.007,
+        shape: Math.random() > 0.4 ? 'drop' : 'sparkle',
+        angle: Math.random() * Math.PI * 2,
+        vAngle: (Math.random() - 0.5) * 0.2
+      });
+    }
+
+    let animationId: number;
+    const render = () => {
+      ctx.clearRect(0, 0, width, height);
+
+      let activeCount = 0;
+      particles.forEach(p => {
+        if (p.alpha <= 0) return;
+        activeCount++;
+
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.28; // gentle gravity
+        p.alpha -= p.decay;
+        p.angle += p.vAngle;
+
+        ctx.save();
+        ctx.globalAlpha = Math.max(0, p.alpha);
+        ctx.fillStyle = p.color;
+        ctx.strokeStyle = p.color;
+
+        if (p.shape === 'drop') {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          ctx.fill();
+        } else {
+          // Sparkle 4-point star
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.angle);
+          ctx.beginPath();
+          for (let i = 0; i < 4; i++) {
+            ctx.lineTo(0, -p.radius * 2);
+            ctx.lineTo(p.radius * 0.5, -p.radius * 0.5);
+            ctx.rotate(Math.PI / 2);
+          }
+          ctx.closePath();
+          ctx.fill();
+        }
+        ctx.restore();
+      });
+
+      if (activeCount > 0) {
+        animationId = requestAnimationFrame(render);
+      }
+    };
+
+    animationId = requestAnimationFrame(render);
+    return () => cancelAnimationFrame(animationId);
+  }, []);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      className="absolute inset-0 pointer-events-none z-20 w-full h-full"
+    />
+  );
+};
+
+/* =========================================================================
    3. CANVAS RECEIPT IMAGE GENERATOR (2X RETINA PICTURE PROOF)
    ========================================================================= */
 
@@ -1059,6 +1163,13 @@ export const Hero: React.FC<{ onOpenBooking: () => void }> = ({ onOpenBooking })
         <div className="absolute inset-0 bg-gradient-to-t from-[#001F3F] via-transparent to-[#001F3F]/60" />
       </div>
 
+      {/* Ambient Floating Water Beading Orbs */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-1">
+        <div className="absolute top-1/4 left-10 w-72 h-72 rounded-full bg-[#0066CC]/20 blur-3xl animate-float-slow" />
+        <div className="absolute bottom-1/3 right-12 w-96 h-96 rounded-full bg-[#4DA6FF]/15 blur-3xl animate-glow" style={{ animationDelay: '1.5s' }} />
+        <div className="absolute top-1/3 right-1/4 w-40 h-40 rounded-full bg-cyan-400/10 blur-2xl animate-float-slow" style={{ animationDelay: '0.8s' }} />
+      </div>
+
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden z-1">
         <span className="font-extrabold text-[18vw] tracking-tighter text-white/[0.03] uppercase whitespace-nowrap">
           REFLECT
@@ -1067,12 +1178,23 @@ export const Hero: React.FC<{ onOpenBooking: () => void }> = ({ onOpenBooking })
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-36 pb-20 sm:pt-44 sm:pb-28 w-full">
         <div className="max-w-3xl">
+          {/* Live Mobile Service Radar Beacon */}
+          <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white/95 text-xs sm:text-sm font-medium mb-4 shadow-lg shadow-black/20">
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="animate-radar-ping absolute inline-flex h-full w-full rounded-full bg-[#4DA6FF] opacity-80" />
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#4DA6FF] shadow-sm shadow-[#4DA6FF]" />
+            </span>
+            <span className="font-semibold text-sky-200">Mobile Units Operating</span>
+            <span className="text-white/40">•</span>
+            <span className="text-slate-200">Springfield, Brisbane &amp; Ipswich</span>
+          </div>
+
           <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white/95 text-xs sm:text-sm font-medium mb-6 shadow-lg shadow-black/20">
             <div className="flex items-center gap-0.5 text-amber-400">
               {[...Array(4)].map((_, i) => (
-                <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400 animate-sparkle" style={{ animationDelay: `${i * 0.4}s` }} />
               ))}
-              <Star className="w-3.5 h-3.5 fill-amber-400/60 text-amber-400" />
+              <Star className="w-3.5 h-3.5 fill-amber-400/60 text-amber-400 animate-sparkle" style={{ animationDelay: '1.6s' }} />
             </div>
             <span className="font-bold">4.5</span>
             <span className="text-white/60">|</span>
@@ -1093,17 +1215,17 @@ export const Hero: React.FC<{ onOpenBooking: () => void }> = ({ onOpenBooking })
           <div className="mt-8 sm:mt-10 flex flex-wrap items-center gap-3.5 sm:gap-4">
             <button
               onClick={onOpenBooking}
-              className="inline-flex items-center justify-center gap-2.5 px-7 py-3.5 sm:px-8 sm:py-4 rounded-full text-base font-bold text-white bg-[#0066CC] hover:bg-[#4DA6FF] shadow-xl shadow-[#0066CC]/40 hover:shadow-sky-400/50 transition-all duration-300 transform active:scale-95 cursor-pointer"
+              className="btn-shimmer hover-card-lift inline-flex items-center justify-center gap-2.5 px-7 py-3.5 sm:px-8 sm:py-4 rounded-full text-base font-bold text-white bg-[#0066CC] hover:bg-[#4DA6FF] shadow-xl shadow-[#0066CC]/40 hover:shadow-sky-400/50 transition-all duration-300 transform active:scale-95 cursor-pointer group"
             >
               <span>Book Online</span>
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </button>
 
             <a
               href={`tel:${BUSINESS_INFO.phone}`}
-              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 sm:px-7 sm:py-4 rounded-full text-base font-semibold text-white bg-white/10 hover:bg-white/20 border border-white/25 backdrop-blur-md transition-all duration-200"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 sm:px-7 sm:py-4 rounded-full text-base font-semibold text-white bg-white/10 hover:bg-white/20 border border-white/25 backdrop-blur-md transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0"
             >
-              <Phone className="w-4 h-4 text-sky-400" />
+              <Phone className="w-4 h-4 text-sky-400 animate-pulse" />
               <span>Call Now</span>
             </a>
           </div>
@@ -1224,13 +1346,13 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
             return (
               <article
                 key={service.id}
-                className="group bg-white rounded-2xl border border-blue-900/10 shadow-sm hover:shadow-xl hover:shadow-blue-950/10 hover:border-blue-500/40 transition-all duration-300 flex flex-col overflow-hidden"
+                className="group hover-card-lift bg-white rounded-2xl border border-blue-900/10 shadow-sm hover:border-blue-400/50 flex flex-col overflow-hidden"
               >
                 <div className="relative h-52 overflow-hidden bg-slate-100">
                   <img
                     src={service.image}
                     alt={service.name}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
                     loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
@@ -1927,7 +2049,7 @@ export const Footer: React.FC<{ onOpenBooking: () => void }> = ({ onOpenBooking 
 
       <a
         href={`tel:${BUSINESS_INFO.phone}`}
-        className="fixed bottom-5 right-5 z-40 w-14 h-14 rounded-full bg-[#0066CC] hover:bg-sky-400 text-white shadow-2xl shadow-blue-900/60 flex items-center justify-center transition-all duration-300 transform hover:scale-110 active:scale-95 group"
+        className="fixed bottom-5 right-5 z-40 w-14 h-14 rounded-full bg-[#0066CC] hover:bg-sky-400 text-white shadow-2xl shadow-blue-900/60 flex items-center justify-center transition-all duration-300 transform hover:scale-110 active:scale-95 group animate-water-ripple"
         aria-label="Call Hydro Detailing"
       >
         <Phone className="w-6 h-6 animate-pulse" />
@@ -2341,7 +2463,7 @@ export const BookingReceiptCard: React.FC<{
       {/* Styled Digital Receipt */}
       <div
         id="printable-receipt"
-        className="relative bg-white rounded-2xl border-2 border-slate-200 shadow-xl overflow-hidden font-sans text-left"
+        className="animate-receipt-print relative bg-white rounded-2xl border-2 border-slate-200 shadow-2xl overflow-hidden font-sans text-left"
       >
         <div className="bg-[#001F3F] text-white p-5 sm:p-6 text-center relative overflow-hidden">
           <div className="absolute top-0 inset-x-0 h-1 bg-amber-400" />
@@ -2373,9 +2495,9 @@ export const BookingReceiptCard: React.FC<{
               <span className="font-medium text-slate-700 text-[11px]">{issueDate}</span>
             </div>
 
-            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 font-bold text-xs border border-emerald-300/50">
+            <span className="animate-stamp inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 font-black text-xs border border-emerald-400 shadow-sm">
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-              <span>CONFIRMED</span>
+              <span>✓ CONFIRMED</span>
             </span>
           </div>
         </div>
@@ -2745,7 +2867,7 @@ export const BookingModal: React.FC<{
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-black/65 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 animate-fadeIn">
       <div
-        className="relative bg-white rounded-3xl max-w-2xl w-full shadow-2xl border border-blue-900/10 overflow-hidden my-4 flex flex-col max-h-[92vh]"
+        className="animate-modal-in relative bg-white rounded-3xl max-w-2xl w-full shadow-2xl border border-blue-900/10 overflow-hidden my-4 flex flex-col max-h-[92vh]"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="sticky top-0 z-20 bg-white/95 backdrop-blur-md px-6 py-4 border-b border-slate-100 flex items-center justify-between">
@@ -2785,11 +2907,12 @@ export const BookingModal: React.FC<{
           </div>
         </div>
 
-        <div className="p-6 sm:p-8 overflow-y-auto flex-1">
+        <div className="p-6 sm:p-8 overflow-y-auto flex-1 relative">
           {isCompleted && completedBooking ? (
-            <div className="space-y-6 animate-fadeIn py-2">
-              <div className="text-center">
-                <div className="w-14 h-14 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto shadow-inner mb-3">
+            <div className="space-y-6 animate-fadeIn py-2 relative">
+              <HydroCelebrationSpray />
+              <div className="text-center relative z-10">
+                <div className="w-14 h-14 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto shadow-inner mb-3 animate-bounce" style={{ animationIterationCount: 3 }}>
                   <Check className="w-7 h-7" />
                 </div>
                 <span className="px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold uppercase tracking-wider inline-block mb-1">
