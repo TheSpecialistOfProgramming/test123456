@@ -1,0 +1,63 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --navy: #001F3F;
+    --navy-dark: #001329;
+    --blue: #0066CC;
+    --blue-dark: #004d99;
+    --sky: #4DA6FF;
+    --tint: #F0F7FF;
+    --muted: #5d7690;
+    --line: rgba(0, 102, 204, 0.12);
+    --line-strong: rgba(0, 102, 204, 0.3);
+    --font-h: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    --font-b: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-b);
+    color: var(--navy);
+    background-color: #ffffff;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-h);
+    letter-spacing: -0.02em;
+  }
+}
+
+@keyframes bobAnimation {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(8px);
+  }
+}
+
+.animate-bob {
+  animation: bobAnimation 2s infinite ease-in-out;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+.animate-glow {
+  animation: pulseGlow 3s infinite ease-in-out;
+}

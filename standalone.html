@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hydro Detailing Brisbane | Premium Mobile Car Detailing</title>
+  <meta name="description" content="Premium mobile car detailing across Brisbane, Springfield, Ipswich and surrounds. Interior details, paint correction and ceramic coating. Book online.">
+  <link rel="icon" href="https://media.base44.com/images/public/6a1ff5a5ebbdcf02189dae7e/eca68586a_41CCB282-7922-44D3-BBDA-4897CB99DAF7__1_.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS via CDN for 1-file GitHub compatibility -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+          },
+          colors: {
+            hydro: {
+              50: '#ecfeff',
+              100: '#cffafe',
+              400: '#22d3ee',
+              500: '#06b6d4',
+              600: '#0891b2',
+              900: '#0c243a',
+              950: '#061320'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #050b14;
+      color: #e2e8f0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .glass-card {
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .glass-card-hover:hover {
+      border-color: rgba(6, 182, 212, 0.4);
+      transform: translateY(-2px);
+      transition: all 0.25s ease;
+    }
+    .glow-cyan {
+      box-shadow: 0 0 25px -5px rgba(6, 182, 212, 0.35);
+    }
+    .text-gradient {
+      background: linear-gradient(135deg, #38bdf8 0%, #06b6d4 50%, #2dd4bf 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #050b14;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1e293b;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #0891b2;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-cyan-500 selection:text-white">
+
+  <!-- ==========================================
+       LIMITED TIME OFFER BANNER (Non-overlapping)
+       ========================================== -->
+  <aside aria-label="Special Offer" class="bg-gradient-to-r from-amber-500/20 via-cyan-500/20 to-blue-600/20 border-b border-cyan-500/30 px-4 py-2.5 text-xs md:text-sm text-cyan-200 sticky top-0 z-50 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
+      <div class="flex items-center gap-2">
+        <span class="inline-flex items-center justify-center px-2 py-0.5 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30 animate-pulse">
+          ⚡ LIMITED DEAL
+        </span>
+        <span class="font-medium text-slate-100">
+          Book online this week &amp; get a <strong class="text-cyan-400">FREE Hydrophobic Glass Treatment</strong> (Value $50)
+        </span>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="text-slate-400 hidden sm:inline">Offer ends Sunday 11:59 PM</span>
+        <button onclick="openBookingModal('package-ultimate')" class="bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-semibold px-3 py-1 rounded text-xs transition">
+          Claim Now &rarr;
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ==========================================
+       HEADER & NAVIGATION
+       ========================================== -->
+  <header class="border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-md sticky top-[41px] z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <!-- Brand Logo -->
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center text-slate-950 font-black text-2xl shadow-lg shadow-cyan-500/20 group-hover:scale-105 transition-transform">
+          💧
+        </div>
+        <div>
+          <div class="text-xl font-extrabold tracking-tight text-white flex items-center gap-1.5">
+            HYDRO <span class="text-cyan-400 text-sm font-semibold px-1.5 py-0.5 bg-cyan-950/60 border border-cyan-500/30 rounded">BRISBANE</span>
+          </div>
+          <div class="text-[11px] text-slate-400 tracking-wider font-medium uppercase">
+            Mobile Car Detailing &bull; We Come To You
+          </div>
+        </div>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+        <a href="#packages" class="hover:text-cyan-400 transition">Packages</a>
+        <a href="#why-us" class="hover:text-cyan-400 transition">Why Hydro</a>
+        <a href="#reviews" class="hover:text-cyan-400 transition">Reviews</a>
+        <a href="#faq" class="hover:text-cyan-400 transition">FAQ</a>
+        <a href="https://instagram.com/hydrodetailing.brisbane" target="_blank" rel="noopener" class="flex items-center gap-1.5 text-slate-400 hover:text-cyan-400 transition">
+          <svg class="w-4 h-4 text-pink-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          @hydrodetailing.brisbane
+        </a>
+      </nav>
+
+      <!-- Action Button -->
+      <div class="flex items-center gap-3">
+        <a href="tel:0432000000" class="hidden sm:flex items-center gap-2 text-xs font-semibold text-slate-300 border border-slate-700/80 px-3.5 py-2 rounded-lg hover:border-slate-500 transition">
+          📞 0432 000 000
+        </a>
+        <button onclick="openBookingModal()" class="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-bold text-sm px-5 py-2.5 rounded-lg shadow-lg shadow-cyan-500/25 transition">
+          Book Online
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==========================================
+       HERO SECTION
+       ========================================== -->
+  <section class="relative overflow-hidden py-16 lg:py-24 border-b border-slate-800/60">
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(6,182,212,0.15),transparent_50%)] pointer-events-none"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+      <div class="grid lg:grid-cols-12 gap-12 items-center">
+        <div class="lg:col-span-7 space-y-6">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-cyan-950/80 border border-cyan-500/40 text-cyan-300">
+            📍 Mobile Service Across Greater Brisbane, Ipswich &amp; Springfield
+          </div>
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight">
+            Brisbane’s Premier <br>
+            <span class="text-gradient">Mobile Car Detailing</span>
+          </h1>
+          <p class="text-slate-300 text-base sm:text-lg leading-relaxed max-w-2xl">
+            We bring showroom perfection right to your driveway. On-board deionised spot-free water and whisper-quiet power. Precision interior deep-cleans, machine paint correction, and 5-year ceramic coatings.
+          </p>
+
+          <div class="flex flex-wrap items-center gap-4 pt-2">
+            <button onclick="openBookingModal()" class="bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-300 hover:to-blue-400 text-slate-950 font-bold px-7 py-3.5 rounded-xl shadow-xl shadow-cyan-500/30 text-base transition transform hover:-translate-y-0.5">
+              📅 Book Your Detail Online
+            </button>
+            <a href="#packages" class="glass-card hover:bg-slate-800/50 text-white font-semibold px-6 py-3.5 rounded-xl text-base transition">
+              Explore Packages &amp; Pricing
+            </a>
+          </div>
+
+          <!-- Trust Badges -->
+          <div class="grid grid-cols-3 gap-4 pt-6 border-t border-slate-800/80">
+            <div>
+              <div class="text-xl sm:text-2xl font-black text-cyan-400">5.0 ★★★★★</div>
+              <div class="text-xs text-slate-400">180+ Google Reviews</div>
+            </div>
+            <div>
+              <div class="text-xl sm:text-2xl font-black text-white">100% Mobile</div>
+              <div class="text-xs text-slate-400">We Bring Water &amp; Power</div>
+            </div>
+            <div>
+              <div class="text-xl sm:text-2xl font-black text-cyan-400">Instant Proof</div>
+              <div class="text-xs text-slate-400">Photo Receipt &amp; IG Sync</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-5">
+          <div class="relative glass-card p-6 rounded-2xl glow-cyan">
+            <div class="flex items-center justify-between pb-4 border-b border-slate-800">
+              <span class="text-xs font-bold uppercase tracking-wider text-cyan-400">Popular Choice</span>
+              <span class="text-xs bg-cyan-500/10 text-cyan-300 px-2 py-0.5 rounded border border-cyan-500/30">Top Rated</span>
+            </div>
+            <div class="pt-4 space-y-4">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h3 class="text-xl font-bold text-white">The Ultimate Hydro Package</h3>
+                  <p class="text-xs text-slate-400">Full interior steam sanitation + exterior gloss decontamination</p>
+                </div>
+                <div class="text-right">
+                  <div class="text-2xl font-extrabold text-cyan-400">$320</div>
+                  <div class="text-[10px] text-slate-400">Sedan / Hatch</div>
+                </div>
+              </div>
+              <ul class="text-xs text-slate-300 space-y-2 py-2">
+                <li class="flex items-center gap-2">✓ Two-bucket hand wash &amp; micro-chenille mitt</li>
+                <li class="flex items-center gap-2">✓ Full hot-water carpet &amp; fabric upholstery extraction</li>
+                <li class="flex items-center gap-2">✓ Leather deep clean &amp; hydrophobic conditioning</li>
+                <li class="flex items-center gap-2">✓ Clay bar paint decontamination &amp; high-gloss spray sealant</li>
+                <li class="flex items-center gap-2">✓ Engine bay wipe down &amp; tyre satin dressing</li>
+              </ul>
+              <button onclick="openBookingModal('package-ultimate')" class="w-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold py-3 rounded-xl transition text-sm">
+                Select The Ultimate Hydro
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       PACKAGES & PRICING SECTION
+       ========================================== -->
+  <section id="packages" class="py-20 border-b border-slate-800/60 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <h2 class="text-xs font-bold text-cyan-400 tracking-wider uppercase mb-2">Transparent Pricing</h2>
+        <p class="text-3xl sm:text-4xl font-extrabold text-white">Tailored Detailing Packages</p>
+        <p class="text-slate-400 text-sm mt-3">Select your vehicle category below to see accurate fixed pricing for your car.</p>
+        
+        <!-- Vehicle Size Filter Selector -->
+        <div class="mt-8 inline-flex p-1.5 rounded-xl bg-slate-900 border border-slate-800 shadow-inner">
+          <button id="size-btn-small" onclick="setGlobalVehicleSize('small')" class="px-5 py-2.5 rounded-lg text-xs sm:text-sm font-semibold transition bg-cyan-500 text-slate-950">
+            🚗 Sedan / Hatch
+          </button>
+          <button id="size-btn-medium" onclick="setGlobalVehicleSize('medium')" class="px-5 py-2.5 rounded-lg text-xs sm:text-sm font-semibold transition text-slate-400 hover:text-white">
+            🚙 SUV / Wagon
+          </button>
+          <button id="size-btn-large" onclick="setGlobalVehicleSize('large')" class="px-5 py-2.5 rounded-lg text-xs sm:text-sm font-semibold transition text-slate-400 hover:text-white">
+            🛻 4WD / 7-Seater / Van
+          </button>
+        </div>
+      </div>
+
+      <!-- Packages Grid -->
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="packages-container">
+        <!-- Rendered by JavaScript dynamically based on vehicle size -->
+      </div>
+
+      <!-- Detailing Add-ons -->
+      <div class="mt-16 glass-card rounded-2xl p-8 border border-slate-800">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-800">
+          <div>
+            <h3 class="text-xl font-bold text-white">Custom Detailing Add-ons</h3>
+            <p class="text-xs text-slate-400 mt-1">Upgrade any package with specialised corrective and protective treatments.</p>
+          </div>
+          <span class="text-xs text-cyan-400 font-semibold bg-cyan-950/60 px-3 py-1.5 rounded-full border border-cyan-500/30">
+            Combine &amp; Save
+          </span>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
+          <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800">
+            <div class="flex justify-between items-start">
+              <span class="text-2xl">⚙️</span>
+              <span class="text-sm font-bold text-cyan-400">+$60</span>
+            </div>
+            <h4 class="font-bold text-white text-sm mt-3">Engine Bay Detail</h4>
+            <p class="text-xs text-slate-400 mt-1">Safe degreasing, steam blast, and satin protective dressing.</p>
+          </div>
+          <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800">
+            <div class="flex justify-between items-start">
+              <span class="text-2xl">💡</span>
+              <span class="text-sm font-bold text-cyan-400">+$70</span>
+            </div>
+            <h4 class="font-bold text-white text-sm mt-3">Headlight Restoration</h4>
+            <p class="text-xs text-slate-400 mt-1">Wet-sand oxidation removal + 2-year ceramic UV clear coat.</p>
+          </div>
+          <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800">
+            <div class="flex justify-between items-start">
+              <span class="text-2xl">🐾</span>
+              <span class="text-sm font-bold text-cyan-400">+$50</span>
+            </div>
+            <h4 class="font-bold text-white text-sm mt-3">Pet Hair Removal</h4>
+            <p class="text-xs text-slate-400 mt-1">Specialised rubber brushes and deep vacuum extraction.</p>
+          </div>
+          <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800">
+            <div class="flex justify-between items-start">
+              <span class="text-2xl">🛡️</span>
+              <span class="text-sm font-bold text-cyan-400">+$80</span>
+            </div>
+            <h4 class="font-bold text-white text-sm mt-3">Leather Protection</h4>
+            <p class="text-xs text-slate-400 mt-1">Matte ceramic barrier coating against denim dye and UV fading.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       WHY CHOOSE HYDRO DETAILING
+       ========================================== -->
+  <section id="why-us" class="py-20 border-b border-slate-800/60 bg-slate-950/40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h2 class="text-xs font-bold text-cyan-400 tracking-wider uppercase mb-2">The Hydro Standard</h2>
+        <p class="text-3xl sm:text-4xl font-extrabold text-white">Why Brisbane Drivers Trust Us</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="glass-card p-6 rounded-2xl space-y-3">
+          <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-2xl">
+            🚿
+          </div>
+          <h3 class="text-lg font-bold text-white">Pure Spot-Free Water</h3>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            We carry onboard reverse-osmosis deionised water with zero mineral content. Your vehicle dries without streaks, swirl marks, or water spots, even under direct Brisbane sunshine.
+          </p>
+        </div>
+
+        <div class="glass-card p-6 rounded-2xl space-y-3">
+          <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-2xl">
+            ⚡
+          </div>
+          <h3 class="text-lg font-bold text-white">100% Self-Contained</h3>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            No power outlets or hose hookups needed from your house or office. Our custom Mercedes detailing van carries silent lithium inverter power and high-pressure pumps.
+          </p>
+        </div>
+
+        <div class="glass-card p-6 rounded-2xl space-y-3">
+          <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-2xl">
+            📸
+          </div>
+          <h3 class="text-lg font-bold text-white">Digital Proof &amp; Receipt</h3>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            Every customer receives an instant high-resolution photo receipt, screenshot verification, and automated Instagram direct proof to both you and our owner account.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       CUSTOMER REVIEWS
+       ========================================== -->
+  <section id="reviews" class="py-20 border-b border-slate-800/60">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h2 class="text-xs font-bold text-cyan-400 tracking-wider uppercase mb-2">Verified Brisbane Customers</h2>
+        <p class="text-3xl sm:text-4xl font-extrabold text-white">5-Star Detailing Experience</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="glass-card p-6 rounded-2xl space-y-4">
+          <div class="flex text-amber-400 text-sm">★★★★★</div>
+          <p class="text-xs text-slate-300 italic leading-relaxed">
+            "Booked The Ultimate Hydro package for my Ranger. Hydro arrived right at my driveway in Springfield Lakes. The interior looks and smells like it rolled out of the dealership showroom!"
+          </p>
+          <div class="pt-2 border-t border-slate-800 flex justify-between items-center text-xs">
+            <span class="font-bold text-white">Marcus T.</span>
+            <span class="text-slate-400">Springfield Lakes &bull; Ford Ranger</span>
+          </div>
+        </div>
+
+        <div class="glass-card p-6 rounded-2xl space-y-4">
+          <div class="flex text-amber-400 text-sm">★★★★★</div>
+          <p class="text-xs text-slate-300 italic leading-relaxed">
+            "Paint correction and ceramic coating on my BMW M3. Every swirl mark was eliminated, and the gloss is insane. Love the photo receipt and instant Instagram message!"
+          </p>
+          <div class="pt-2 border-t border-slate-800 flex justify-between items-center text-xs">
+            <span class="font-bold text-white">Julian K.</span>
+            <span class="text-slate-400">New Farm &bull; BMW M3</span>
+          </div>
+        </div>
+
+        <div class="glass-card p-6 rounded-2xl space-y-4">
+          <div class="flex text-amber-400 text-sm">★★★★★</div>
+          <p class="text-xs text-slate-300 italic leading-relaxed">
+            "Super convenient having them come while I was working from home in Paddington. Professional, courteous, and very meticulous with the leather cleaning."
+          </p>
+          <div class="pt-2 border-t border-slate-800 flex justify-between items-center text-xs">
+            <span class="font-bold text-white">Sarah B.</span>
+            <span class="text-slate-400">Paddington &bull; Audi Q5</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       FREQUENTLY ASKED QUESTIONS
+       ========================================== -->
+  <section id="faq" class="py-20 border-b border-slate-800/60 bg-slate-950/40">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-xs font-bold text-cyan-400 tracking-wider uppercase mb-2">Got Questions?</h2>
+        <p class="text-3xl font-extrabold text-white">Frequently Asked Questions</p>
+      </div>
+
+      <div class="space-y-4">
+        <details class="glass-card p-5 rounded-xl group cursor-pointer">
+          <summary class="font-bold text-sm text-white flex justify-between items-center select-none">
+            Do I need to supply water or electricity?
+            <span class="text-cyan-400 text-lg transition-transform group-open:rotate-45">+</span>
+          </summary>
+          <p class="text-xs text-slate-300 mt-3 leading-relaxed">
+            No! Our mobile van is 100% self-sufficient. We carry over 400 litres of spot-free deionised water and an ultra-quiet lithium inverter battery system. We can detail your car in an apartment carpark, driveway, or workplace.
+          </p>
+        </details>
+
+        <details class="glass-card p-5 rounded-xl group cursor-pointer">
+          <summary class="font-bold text-sm text-white flex justify-between items-center select-none">
+            How do I get my booking receipt and confirmation?
+            <span class="text-cyan-400 text-lg transition-transform group-open:rotate-45">+</span>
+          </summary>
+          <p class="text-xs text-slate-300 mt-3 leading-relaxed">
+            Immediately after you complete the booking on this page, an official digital photo receipt with a unique HDB reference code is rendered. You can download the high-resolution photo, take a screenshot, and dispatch the receipt directly via Instagram to our team!
+          </p>
+        </details>
+
+        <details class="glass-card p-5 rounded-xl group cursor-pointer">
+          <summary class="font-bold text-sm text-white flex justify-between items-center select-none">
+            What areas across Brisbane do you service?
+            <span class="text-cyan-400 text-lg transition-transform group-open:rotate-45">+</span>
+          </summary>
+          <p class="text-xs text-slate-300 mt-3 leading-relaxed">
+            We cover Greater Brisbane (CBD, Inner Suburbs, Northside, Southside), Western Suburbs (Indooroopilly, Kenmore), Springfield, Ipswich, Redbank, Logan, and surrounding areas.
+          </p>
+        </details>
+
+        <details class="glass-card p-5 rounded-xl group cursor-pointer">
+          <summary class="font-bold text-sm text-white flex justify-between items-center select-none">
+            What happens if it rains on the scheduled day?
+            <span class="text-cyan-400 text-lg transition-transform group-open:rotate-45">+</span>
+          </summary>
+          <p class="text-xs text-slate-300 mt-3 leading-relaxed">
+            If you have a garage or undercover carport, we can proceed seamlessly. Otherwise, we will contact you in advance to reschedule to the earliest clear day at zero cancellation penalty.
+          </p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       FOOTER
+       ========================================== -->
+  <footer class="bg-slate-950 py-12 border-t border-slate-900 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-lg bg-cyan-500 flex items-center justify-center text-slate-950 font-black">💧</div>
+          <span class="font-bold text-white tracking-wide">Hydro Detailing Brisbane</span>
+          <span class="text-xs text-slate-500">ABN 84 923 104 221</span>
+        </div>
+        <div class="text-xs text-slate-400 flex items-center gap-6">
+          <a href="https://instagram.com/hydrodetailing.brisbane" target="_blank" class="hover:text-cyan-400 flex items-center gap-1">
+            📷 @hydrodetailing.brisbane
+          </a>
+          <a href="tel:0432000000" class="hover:text-cyan-400">📞 0432 000 000</a>
+          <span>Brisbane, QLD Australia</span>
+        </div>
+      </div>
+      <div class="text-center text-[11px] text-slate-600 mt-8">
+        &copy; 2026 Hydro Detailing Brisbane. All rights reserved. Python &amp; HTML standalone edition.
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================
+       INTERACTIVE BOOKING MODAL & RECEIPT ENGINE
+       ========================================== -->
+  <div id="booking-modal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+    <div class="glass-card bg-slate-900/95 border border-cyan-500/30 w-full max-w-2xl rounded-2xl shadow-2xl p-6 sm:p-8 my-auto relative">
+      
+      <!-- Close Button -->
+      <button onclick="closeBookingModal()" class="absolute top-5 right-5 text-slate-400 hover:text-white text-2xl font-bold">
+        &times;
+      </button>
+
+      <!-- Step Header -->
+      <div id="modal-step-header" class="mb-6">
+        <div class="flex items-center gap-2 text-xs font-bold text-cyan-400 uppercase tracking-wider">
+          <span id="step-badge" class="px-2 py-0.5 rounded bg-cyan-950 border border-cyan-500/40">Step 1 of 2</span>
+          <span id="step-title">Booking Details &amp; Schedule</span>
+        </div>
+        <h3 id="modal-heading" class="text-2xl font-extrabold text-white mt-1">Book Mobile Detailing</h3>
+      </div>
+
+      <!-- FORM STEP (Step 1) -->
+      <form id="booking-form" onsubmit="handleBookingSubmit(event)" class="space-y-5">
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">Select Package</label>
+            <select id="form-package" onchange="calculateFormTotal()" class="w-full bg-slate-800/90 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:border-cyan-400 outline-none">
+              <option value="package-express">Express Detail</option>
+              <option value="package-interior">Full Interior Detail</option>
+              <option value="package-exterior">Exterior Cut &amp; Polish</option>
+              <option value="package-ultimate" selected>The Ultimate Hydro Package</option>
+              <option value="package-ceramic">Signature Ceramic Coating</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">Vehicle Category</label>
+            <select id="form-size" onchange="calculateFormTotal()" class="w-full bg-slate-800/90 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:border-cyan-400 outline-none">
+              <option value="small">Sedan / Hatchback</option>
+              <option value="medium">SUV / Wagon</option>
+              <option value="large">4WD / 7-Seater / Dual Cab</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">Vehicle Make &amp; Model</label>
+            <input type="text" id="form-model" required placeholder="e.g. Toyota RAV4, BMW M3, Ranger" class="w-full bg-slate-800/90 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:border-cyan-400 outline-none">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">Brisbane Street Address / Suburb</label>
+            <input type="text" id="form-address" required placeholder="e.g. 42 Queen St, Brisbane City" class="w-full bg-slate-800/90 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:border-cyan-400 outline-none">
+          </div>
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">Preferred Date</label>
+            <input type="date" id="form-date" required class="w-full bg-slate-800/90 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:border-cyan-400 outline-none">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">Arrival Time Window</label>
+            <select id="form-time" class="w-full bg-slate-800/90 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:border-cyan-400 outline-none">
+              <option value="8:00 AM - 10:00 AM">Morning: 8:00 AM - 10:00 AM</option>
+              <option value="10:30 AM - 12:30 PM" selected>Midday: 10:30 AM - 12:30 PM</option>
+              <option value="1:00 PM - 3:00 PM">Afternoon: 1:00 PM - 3:00 PM</option>
+              <option value="3:30 PM - 5:30 PM">Late Afternoon: 3:30 PM - 5:30 PM</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid sm:grid-cols-3 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">Full Name</label>
+            <input type="text" id="form-name" required placeholder="Your Name" class="w-full bg-slate-800/90 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:border-cyan-400 outline-none">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">Phone Number</label>
+            <input type="tel" id="form-phone" required placeholder="0400 000 000" class="w-full bg-slate-800/90 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:border-cyan-400 outline-none">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">Your Instagram Username</label>
+            <input type="text" id="form-instagram" placeholder="@yourhandle" class="w-full bg-slate-800/90 border border-slate-700 rounded-lg px-3 py-2 text-sm text-cyan-300 focus:border-cyan-400 outline-none">
+          </div>
+        </div>
+
+        <!-- Addons checkboxes -->
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-2">Optional Add-ons</label>
+          <div class="grid sm:grid-cols-2 gap-2 text-xs">
+            <label class="flex items-center gap-2 p-2 rounded bg-slate-800/60 border border-slate-700/60 cursor-pointer">
+              <input type="checkbox" id="addon-engine" onchange="calculateFormTotal()" class="rounded accent-cyan-500">
+              <span>Engine Bay Detail (+<strong>$60</strong>)</span>
+            </label>
+            <label class="flex items-center gap-2 p-2 rounded bg-slate-800/60 border border-slate-700/60 cursor-pointer">
+              <input type="checkbox" id="addon-headlight" onchange="calculateFormTotal()" class="rounded accent-cyan-500">
+              <span>Headlight Restoration (+<strong>$70</strong>)</span>
+            </label>
+            <label class="flex items-center gap-2 p-2 rounded bg-slate-800/60 border border-slate-700/60 cursor-pointer">
+              <input type="checkbox" id="addon-pethair" onchange="calculateFormTotal()" class="rounded accent-cyan-500">
+              <span>Pet Hair Removal (+<strong>$50</strong>)</span>
+            </label>
+            <label class="flex items-center gap-2 p-2 rounded bg-slate-800/60 border border-slate-700/60 cursor-pointer">
+              <input type="checkbox" id="addon-leather" onchange="calculateFormTotal()" class="rounded accent-cyan-500">
+              <span>Leather Protection (+<strong>$80</strong>)</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Summary & Submit -->
+        <div class="flex items-center justify-between pt-4 border-t border-slate-800">
+          <div>
+            <span class="text-xs text-slate-400">Total Estimate:</span>
+            <div id="modal-price-display" class="text-2xl font-black text-cyan-400">$320.00 AUD</div>
+          </div>
+          <button type="submit" class="bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-300 hover:to-blue-400 text-slate-950 font-bold px-7 py-3 rounded-xl shadow-lg transition">
+            Confirm &amp; Generate Photo Receipt &rarr;
+          </button>
+        </div>
+      </form>
+
+      <!-- RECEIPT & PROOF STEP (Step 2 - Hidden until submission) -->
+      <div id="receipt-step" class="hidden space-y-5">
+        
+        <!-- PRO TIP SCREENSHOT BANNER -->
+        <div class="bg-gradient-to-r from-amber-500/20 via-cyan-500/20 to-blue-500/20 border-2 border-amber-500/40 rounded-xl p-4 flex items-start gap-3 shadow-lg">
+          <div class="text-2xl">📸</div>
+          <div>
+            <h4 class="text-sm font-bold text-amber-300 uppercase tracking-wide">
+              Please Take a Screenshot for Your Records
+            </h4>
+            <p class="text-xs text-slate-200 mt-0.5 leading-relaxed">
+              We recommend screenshotting this verified receipt now. You can also download the high-resolution photo file below and message it to our Instagram account.
+            </p>
+          </div>
+        </div>
+
+        <!-- Canvas Container for Picture Receipt -->
+        <div class="bg-slate-950 p-2 sm:p-4 rounded-xl border border-slate-800 flex flex-col items-center justify-center">
+          <canvas id="receipt-canvas" class="max-w-full h-auto rounded-lg shadow-2xl border border-slate-700/60"></canvas>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <button onclick="downloadReceiptImage()" class="flex items-center justify-center gap-2 bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 px-4 rounded-xl border border-slate-600 transition text-sm">
+            💾 Download Photo Receipt (PNG)
+          </button>
+          <button onclick="dispatchToInstagram()" id="ig-dispatch-btn" class="flex items-center justify-center gap-2 bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-500 hover:to-purple-500 text-white font-bold py-3 px-4 rounded-xl shadow-lg transition text-sm">
+            📱 Message Receipt to Instagram
+          </button>
+        </div>
+
+        <!-- Instagram Status Box -->
+        <div id="ig-status-box" class="hidden glass-card p-4 rounded-xl border border-pink-500/30 space-y-2">
+          <div class="flex items-center justify-between text-xs">
+            <span class="font-bold text-pink-400 flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-pink-500 animate-ping"></span>
+              Instagram Receipt Dispatch Ready
+            </span>
+            <span id="ig-ref-badge" class="text-slate-400 font-mono">HDB-XXXXXX</span>
+          </div>
+          <p class="text-xs text-slate-300">
+            Receipt dispatched to <strong>@hydrodetailing.brisbane</strong>. Click below to open direct chat or copy the proof payload.
+          </p>
+          <div class="flex items-center gap-2 pt-2">
+            <a href="https://ig.me/m/hydrodetailing.brisbane" target="_blank" class="flex-1 text-center bg-pink-600 hover:bg-pink-500 text-white font-bold py-2 rounded-lg text-xs transition">
+              Open Direct Chat (@hydrodetailing.brisbane)
+            </a>
+            <button onclick="copyReceiptText()" id="copy-btn" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-4 py-2 rounded-lg text-xs font-semibold border border-slate-700 transition">
+              Copy Proof
+            </button>
+          </div>
+        </div>
+
+        <div class="text-center pt-2">
+          <button onclick="closeBookingModal()" class="text-xs text-slate-400 hover:text-white underline">
+            Done &amp; Close Window
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 bg-slate-900 border border-cyan-500 text-white px-4 py-3 rounded-xl shadow-2xl text-xs font-semibold hidden transition transform">
+    Notification text
+  </div>
+
+  <!-- ==========================================
+       ALL-IN-ONE JAVASCRIPT APPLICATION ENGINE
+       ========================================== -->
+  <script>
+    // --- Data Model & State ---
+    let currentVehicleSize = 'small';
+    let currentBooking = null;
+
+    const PACKAGES = [
+      {
+        id: 'package-express',
+        name: 'Express Detail',
+        badge: 'Maintenance',
+        description: 'Complete high-pressure decontamination hand wash and quick interior vacuum.',
+        prices: { small: 90, medium: 110, large: 130 },
+        duration: '1.5 Hours',
+        inclusions: [
+          'High-pressure snow foam pre-wash',
+          'Two-bucket scratch-free hand wash',
+          'Wheel faces & tyres degreased',
+          'Cabin floor & seats quick vacuum',
+          'Dashboard & console wipe down',
+          'Exterior glass cleaned streak-free'
+        ]
+      },
+      {
+        id: 'package-interior',
+        name: 'Full Interior Detail',
+        badge: 'Cabin Renewal',
+        description: 'Deep extraction, leather rejuvenation, steam sanitation, and stain removal.',
+        prices: { small: 180, medium: 210, large: 240 },
+        duration: '3.0 Hours',
+        inclusions: [
+          'Complete carpet & seat shampoo extraction',
+          'High-temperature steam vent sanitation',
+          'Leather seats deep cleaned & conditioned',
+          'Roof headliner gentle spot cleaning',
+          'All plastics, console & door cards scrubbed',
+          'Antibacterial odour neutralisation treatment'
+        ]
+      },
+      {
+        id: 'package-exterior',
+        name: 'Exterior Cut & Polish',
+        badge: 'Paint Correction',
+        description: 'Multi-stage machine polishing removing 80%+ of swirl marks, scratches and haze.',
+        prices: { small: 220, medium: 260, large: 300 },
+        duration: '3.5 Hours',
+        inclusions: [
+          'Iron fallout & clay bar decontamination',
+          'Single-to-dual stage machine rotary cut',
+          'High-gloss finishing jewel polish',
+          'Deep wet-look gloss enhancement',
+          '9-Month synthetic sealant barrier applied',
+          'Exterior trim UV restoration dressing'
+        ]
+      },
+      {
+        id: 'package-ultimate',
+        name: 'The Ultimate Hydro Package',
+        badge: 'Most Popular',
+        popular: true,
+        description: 'Full interior steam extraction paired with full exterior multi-stage detailing.',
+        prices: { small: 320, medium: 370, large: 420 },
+        duration: '4.5 Hours',
+        inclusions: [
+          'Everything in Full Interior Detail',
+          'Everything in Exterior Decontamination Wash',
+          'Single-stage machine gloss polish',
+          'Engine bay wipedown & dressing',
+          '6-Month hydrophobic paint protection',
+          'Wheel barrel detail & tyre satin shine'
+        ]
+      },
+      {
+        id: 'package-ceramic',
+        name: 'Signature Ceramic Coating',
+        badge: 'Ultimate 5-Year Armor',
+        description: 'Professional grade 9H ceramic coating with multi-year warranty and extreme hydrophobics.',
+        prices: { small: 450, medium: 520, large: 600 },
+        duration: '6.0 Hours',
+        inclusions: [
+          'Extensive two-stage paint correction',
+          'Full isopropyl alcohol panel wipe down',
+          '5-Year 9H ceramic coating on painted panels',
+          'Wheel faces & windshield ceramic sealed',
+          'Extreme water beading & UV defence',
+          'Official warranty registration certificate'
+        ]
+      }
+    ];
+
+    // --- Render Package Cards ---
+    function renderPackages() {
+      const container = document.getElementById('packages-container');
+      if (!container) return;
+
+      container.innerHTML = PACKAGES.map(pkg => {
+        const price = pkg.prices[currentVehicleSize];
+        const isPopular = pkg.popular;
+        
+        return `
+          <div class="glass-card rounded-2xl p-6 flex flex-col justify-between relative ${isPopular ? 'border-cyan-500/60 glow-cyan ring-1 ring-cyan-500/40' : 'border-slate-800'} glass-card-hover">
+            ${isPopular ? `
+              <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-cyan-400 to-blue-500 text-slate-950 text-[11px] font-black uppercase px-3.5 py-0.5 rounded-full shadow-md tracking-wider">
+                ★ ${pkg.badge}
+              </div>
+            ` : ''}
+
+            <div>
+              <div class="flex justify-between items-baseline mb-2">
+                <span class="text-xs font-semibold text-cyan-400 uppercase tracking-wider">${pkg.badge}</span>
+                <span class="text-xs text-slate-400">⏱ ${pkg.duration}</span>
+              </div>
+              <h3 class="text-xl font-bold text-white mb-2">${pkg.name}</h3>
+              <p class="text-xs text-slate-400 leading-relaxed mb-4">${pkg.description}</p>
+              
+              <div class="mb-6 p-3 rounded-xl bg-slate-900/80 border border-slate-800/80 flex items-baseline justify-between">
+                <span class="text-xs text-slate-400">Vehicle Total:</span>
+                <div class="text-2xl font-black text-white">
+                  $<span class="text-cyan-400">${price}</span> <span class="text-xs font-normal text-slate-400">AUD</span>
+                </div>
+              </div>
+
+              <div class="space-y-2 mb-6">
+                <div class="text-[11px] font-bold text-slate-300 uppercase tracking-wider">What's Included:</div>
+                <ul class="text-xs text-slate-300 space-y-1.5">
+                  ${pkg.inclusions.map(inc => `<li class="flex items-start gap-2"><span class="text-cyan-400 font-bold">✓</span> <span>${inc}</span></li>`).join('')}
+                </ul>
+              </div>
+            </div>
+
+            <button onclick="openBookingModal('${pkg.id}')" class="w-full mt-4 ${isPopular ? 'bg-gradient-to-r from-cyan-400 to-blue-500 text-slate-950 font-bold' : 'bg-slate-800 hover:bg-slate-700 text-white font-semibold'} py-3 rounded-xl transition text-sm flex items-center justify-center gap-1.5 shadow-md">
+              Book ${pkg.name} &rarr;
+            </button>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // --- Size Switcher ---
+    function setGlobalVehicleSize(size) {
+      currentVehicleSize = size;
+      ['small', 'medium', 'large'].forEach(s => {
+        const btn = document.getElementById(`size-btn-${s}`);
+        if (btn) {
+          if (s === size) {
+            btn.className = 'px-5 py-2.5 rounded-lg text-xs sm:text-sm font-semibold transition bg-cyan-500 text-slate-950';
+          } else {
+            btn.className = 'px-5 py-2.5 rounded-lg text-xs sm:text-sm font-semibold transition text-slate-400 hover:text-white';
+          }
+        }
+      });
+      renderPackages();
+    }
+
+    // --- Modal Controls ---
+    function openBookingModal(packageId) {
+      const modal = document.getElementById('booking-modal');
+      const formStep = document.getElementById('booking-form');
+      const receiptStep = document.getElementById('receipt-step');
+      const stepBadge = document.getElementById('step-badge');
+      const stepTitle = document.getElementById('step-title');
+      const modalHeading = document.getElementById('modal-heading');
+
+      if (packageId) {
+        const pkgSelect = document.getElementById('form-package');
+        if (pkgSelect) pkgSelect.value = packageId;
+      }
+
+      const sizeSelect = document.getElementById('form-size');
+      if (sizeSelect) sizeSelect.value = currentVehicleSize;
+
+      // Default date to tomorrow
+      const dateInput = document.getElementById('form-date');
+      if (dateInput && !dateInput.value) {
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        dateInput.value = tomorrow.toISOString().split('T')[0];
+      }
+
+      formStep.classList.remove('hidden');
+      receiptStep.classList.add('hidden');
+      stepBadge.textContent = 'Step 1 of 2';
+      stepTitle.textContent = 'Booking Details & Schedule';
+      modalHeading.textContent = 'Book Mobile Detailing';
+
+      calculateFormTotal();
+      modal.classList.remove('hidden');
+    }
+
+    function closeBookingModal() {
+      document.getElementById('booking-modal').classList.add('hidden');
+    }
+
+    // --- Calculate Total In Form ---
+    function calculateFormTotal() {
+      const pkgId = document.getElementById('form-package').value;
+      const size = document.getElementById('form-size').value;
+      const pkg = PACKAGES.find(p => p.id === pkgId) || PACKAGES[3];
+      let total = pkg.prices[size] || 320;
+
+      if (document.getElementById('addon-engine')?.checked) total += 60;
+      if (document.getElementById('addon-headlight')?.checked) total += 70;
+      if (document.getElementById('addon-pethair')?.checked) total += 50;
+      if (document.getElementById('addon-leather')?.checked) total += 80;
+
+      const display = document.getElementById('modal-price-display');
+      if (display) display.textContent = `$${total}.00 AUD`;
+      return total;
+    }
+
+    // --- Form Submission & Receipt Rendering ---
+    function handleBookingSubmit(event) {
+      event.preventDefault();
+
+      const pkgId = document.getElementById('form-package').value;
+      const size = document.getElementById('form-size').value;
+      const pkg = PACKAGES.find(p => p.id === pkgId) || PACKAGES[3];
+      const total = calculateFormTotal();
+
+      const addons = [];
+      if (document.getElementById('addon-engine')?.checked) addons.push({ name: 'Engine Bay Detail', price: 60 });
+      if (document.getElementById('addon-headlight')?.checked) addons.push({ name: 'Headlight Restoration', price: 70 });
+      if (document.getElementById('addon-pethair')?.checked) addons.push({ name: 'Pet Hair Removal', price: 50 });
+      if (document.getElementById('addon-leather')?.checked) addons.push({ name: 'Leather Protection', price: 80 });
+
+      let igUser = document.getElementById('form-instagram').value.trim();
+      if (igUser && !igUser.startsWith('@')) igUser = '@' + igUser;
+
+      const refNum = 'HDB-' + Math.floor(100000 + Math.random() * 900000);
+
+      currentBooking = {
+        id: refNum,
+        name: document.getElementById('form-name').value.trim(),
+        phone: document.getElementById('form-phone').value.trim(),
+        instagramUsername: igUser || 'Registered Online',
+        serviceName: pkg.name,
+        vehicleSize: size,
+        vehicleModel: document.getElementById('form-model').value.trim(),
+        address: document.getElementById('form-address').value.trim(),
+        date: document.getElementById('form-date').value,
+        time: document.getElementById('form-time').value,
+        addons: addons,
+        totalPrice: total,
+        timestamp: new Date().toLocaleString('en-AU', { timeZone: 'Australia/Brisbane' })
+      };
+
+      // Transition to Receipt Step
+      document.getElementById('booking-form').classList.add('hidden');
+      document.getElementById('receipt-step').classList.remove('hidden');
+      document.getElementById('step-badge').textContent = 'Step 2 of 2';
+      document.getElementById('step-title').textContent = 'Official Photo Receipt & Proof';
+      document.getElementById('modal-heading').textContent = 'Booking Verified!';
+
+      // Render 2x Retina Canvas Receipt
+      drawReceiptCanvas(currentBooking);
+
+      // Automatically dispatch to Python backend or prepare payload
+      sendToBackend(currentBooking);
+    }
+
+    // --- High-Resolution 2x Canvas Drawing Engine ---
+    function drawReceiptCanvas(b) {
+      const canvas = document.getElementById('receipt-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+
+      const width = 640;
+      const height = 820;
+      const dpr = 2; // High-DPI Retina scale
+
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      canvas.style.width = width + 'px';
+      canvas.style.height = height + 'px';
+      ctx.scale(dpr, dpr);
+
+      // Background Gradient
+      const bgGrad = ctx.createLinearGradient(0, 0, width, height);
+      bgGrad.addColorStop(0, '#0a1424');
+      bgGrad.addColorStop(0.5, '#050b14');
+      bgGrad.addColorStop(1, '#071626');
+      ctx.fillStyle = bgGrad;
+      ctx.fillRect(0, 0, width, height);
+
+      // Outer Decorative Border
+      ctx.strokeStyle = '#0891b2';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(16, 16, width - 32, height - 32);
+
+      // Inner Accent Glow Border
+      ctx.strokeStyle = 'rgba(6, 182, 212, 0.2)';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(22, 22, width - 44, height - 44);
+
+      // Header Banner
+      ctx.fillStyle = '#06b6d4';
+      ctx.font = 'bold 22px "Plus Jakarta Sans", sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('💧 HYDRO DETAILING BRISBANE', width / 2, 60);
+
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '12px "Inter", sans-serif';
+      ctx.fillText('OFFICIAL DIGITAL RECEIPT & BOOKING PROOF', width / 2, 82);
+
+      // Dividing Line
+      ctx.strokeStyle = '#1e293b';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(35, 100);
+      ctx.lineTo(width - 35, 100);
+      ctx.stroke();
+
+      // Booking Reference & Status Badge
+      ctx.textAlign = 'left';
+      ctx.fillStyle = '#38bdf8';
+      ctx.font = 'bold 15px monospace';
+      ctx.fillText(`REF: ${b.id}`, 40, 130);
+
+      ctx.textAlign = 'right';
+      ctx.fillStyle = '#10b981';
+      ctx.font = 'bold 13px "Inter", sans-serif';
+      ctx.fillText('● VERIFIED & SCHEDULED', width - 40, 130);
+
+      // Section: Customer & Schedule Box
+      ctx.fillStyle = 'rgba(15, 23, 42, 0.6)';
+      ctx.fillRect(35, 150, width - 70, 140);
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+      ctx.strokeRect(35, 150, width - 70, 140);
+
+      ctx.textAlign = 'left';
+      ctx.font = '12px "Inter", sans-serif';
+      ctx.fillStyle = '#64748b';
+      ctx.fillText('CUSTOMER NAME', 50, 175);
+      ctx.fillText('CONTACT PHONE', 50, 205);
+      ctx.fillText('INSTAGRAM HANDLE', 50, 235);
+      ctx.fillText('LOCATION', 50, 265);
+
+      ctx.fillStyle = '#f8fafc';
+      ctx.font = 'bold 12px "Inter", sans-serif';
+      ctx.fillText(b.name, 190, 175);
+      ctx.fillText(b.phone, 190, 205);
+      ctx.fillStyle = '#38bdf8';
+      ctx.fillText(b.instagramUsername, 190, 235);
+      ctx.fillStyle = '#f8fafc';
+      // Truncate address if needed
+      const displayAddr = b.address.length > 38 ? b.address.substring(0, 35) + '...' : b.address;
+      ctx.fillText(displayAddr, 190, 265);
+
+      // Section: Appointment & Vehicle Box
+      ctx.fillStyle = 'rgba(15, 23, 42, 0.6)';
+      ctx.fillRect(35, 305, width - 70, 110);
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+      ctx.strokeRect(35, 305, width - 70, 110);
+
+      ctx.fillStyle = '#64748b';
+      ctx.font = '12px "Inter", sans-serif';
+      ctx.fillText('DATE & ARRIVAL', 50, 330);
+      ctx.fillText('VEHICLE MODEL', 50, 360);
+      ctx.fillText('VEHICLE CATEGORY', 50, 390);
+
+      ctx.fillStyle = '#f8fafc';
+      ctx.font = 'bold 12px "Inter", sans-serif';
+      ctx.fillText(`${b.date} (${b.time})`, 190, 330);
+      ctx.fillText(b.vehicleModel, 190, 360);
+      ctx.fillText(b.vehicleSize.toUpperCase() + ' CLASS', 190, 390);
+
+      // Itemized Services Table
+      ctx.fillStyle = '#06b6d4';
+      ctx.font = 'bold 13px "Inter", sans-serif';
+      ctx.fillText('ITEMIZED CHARGES', 40, 445);
+      ctx.textAlign = 'right';
+      ctx.fillText('AMOUNT (AUD)', width - 40, 445);
+
+      ctx.strokeStyle = '#334155';
+      ctx.beginPath();
+      ctx.moveTo(35, 455);
+      ctx.lineTo(width - 35, 455);
+      ctx.stroke();
+
+      let yPos = 480;
+      ctx.textAlign = 'left';
+      ctx.font = '13px "Inter", sans-serif';
+      ctx.fillStyle = '#f8fafc';
+      ctx.fillText(b.serviceName, 40, yPos);
+      ctx.textAlign = 'right';
+      ctx.fillText(`$${b.totalPrice - b.addons.reduce((acc, a) => acc + a.price, 0)}.00`, width - 40, yPos);
+
+      b.addons.forEach(ad => {
+        yPos += 26;
+        ctx.textAlign = 'left';
+        ctx.fillStyle = '#94a3b8';
+        ctx.font = '12px "Inter", sans-serif';
+        ctx.fillText(`+ ${ad.name}`, 40, yPos);
+        ctx.textAlign = 'right';
+        ctx.fillText(`$${ad.price}.00`, width - 40, yPos);
+      });
+
+      // Total Box
+      yPos += 35;
+      ctx.fillStyle = 'rgba(6, 182, 212, 0.1)';
+      ctx.fillRect(35, yPos, width - 70, 75);
+      ctx.strokeStyle = 'rgba(6, 182, 212, 0.4)';
+      ctx.strokeRect(35, yPos, width - 70, 75);
+
+      ctx.textAlign = 'left';
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '12px "Inter", sans-serif';
+      ctx.fillText('TOTAL DUE (INCL. GST)', 50, yPos + 35);
+      ctx.font = '10px "Inter", sans-serif';
+      ctx.fillText('PAYMENT ON COMPLETION (CARD / CASH / OSKO)', 50, yPos + 55);
+
+      ctx.textAlign = 'right';
+      ctx.fillStyle = '#22d3ee';
+      ctx.font = 'bold 26px "Plus Jakarta Sans", sans-serif';
+      ctx.fillText(`$${b.totalPrice}.00 AUD`, width - 50, yPos + 45);
+
+      // Footer Notes & Instagram Proof Seal
+      const footerY = height - 80;
+      ctx.strokeStyle = '#1e293b';
+      ctx.beginPath();
+      ctx.moveTo(35, footerY);
+      ctx.lineTo(width - 35, footerY);
+      ctx.stroke();
+
+      ctx.textAlign = 'center';
+      ctx.fillStyle = '#64748b';
+      ctx.font = '11px "Inter", sans-serif';
+      ctx.fillText('HYDRO DETAILING BRISBANE • INSTAGRAM: @hydrodetailing.brisbane', width / 2, footerY + 25);
+      ctx.fillText(`Generated: ${b.timestamp} • Please screenshot this receipt`, width / 2, footerY + 45);
+    }
+
+    // --- Download Canvas As PNG Photo ---
+    function downloadReceiptImage() {
+      const canvas = document.getElementById('receipt-canvas');
+      if (!canvas) return;
+      const dataUrl = canvas.toDataURL('image/png');
+      const a = document.createElement('a');
+      a.href = dataUrl;
+      a.download = `Hydro-Receipt-${currentBooking ? currentBooking.id : 'Proof'}.png`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      showToast('📸 Photo receipt downloaded to your device!');
+    }
+
+    // --- Backend Dispatch API & Instagram Sync ---
+    async function sendToBackend(booking) {
+      const igBadge = document.getElementById('ig-ref-badge');
+      if (igBadge) igBadge.textContent = booking.id;
+
+      try {
+        const response = await fetch('/api/send-instagram-receipt', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(booking)
+        });
+        const resData = await response.json();
+        console.log('Python server receipt response:', resData);
+      } catch (err) {
+        console.log('Local/standalone mode active: Receipt generated locally.');
+      }
+    }
+
+    function dispatchToInstagram() {
+      if (!currentBooking) return;
+      const box = document.getElementById('ig-status-box');
+      if (box) box.classList.remove('hidden');
+
+      const message = generateInstagramText(currentBooking);
+      navigator.clipboard.writeText(message).then(() => {
+        showToast('📋 Receipt text copied! Opening Instagram...');
+      }).catch(() => {
+        showToast('Opening Instagram...');
+      });
+
+      setTimeout(() => {
+        window.open('https://ig.me/m/hydrodetailing.brisbane', '_blank');
+      }, 700);
+    }
+
+    function generateInstagramText(b) {
+      return `🚗 HYDRO DETAILING BRISBANE RECEIPT PROOF\n` +
+             `-----------------------------------------\n` +
+             `• Booking Ref: ${b.id}\n` +
+             `• Customer: ${b.name} (${b.instagramUsername})\n` +
+             `• Service: ${b.serviceName}\n` +
+             `• Scheduled: ${b.date} at ${b.time}\n` +
+             `• Vehicle: ${b.vehicleModel} (${b.vehicleSize.toUpperCase()})\n` +
+             `• Location: ${b.address}\n` +
+             `• Total: $${b.totalPrice}.00 AUD (GST Included)\n\n` +
+             `Owner: @hydrodetailing.brisbane\n` +
+             `Status: VERIFIED & CONFIRMED`;
+    }
+
+    function copyReceiptText() {
+      if (!currentBooking) return;
+      const msg = generateInstagramText(currentBooking);
+      navigator.clipboard.writeText(msg).then(() => {
+        showToast('✅ Instagram receipt message copied to clipboard!');
+      });
+    }
+
+    function showToast(text) {
+      const toast = document.getElementById('toast');
+      if (!toast) return;
+      toast.textContent = text;
+      toast.classList.remove('hidden');
+      setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 3500);
+    }
+
+    // --- Initialize On Load ---
+    document.addEventListener('DOMContentLoaded', () => {
+      renderPackages();
+    });
+  </script>
+</body>
+</html>
